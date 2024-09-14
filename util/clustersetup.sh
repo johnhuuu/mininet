@@ -40,6 +40,27 @@ usage="./clustersetup.sh [ -p|h|c ] [ host1 ] [ host2 ] ...\n
                     Any hosts taken as arguments will be cleaned
         "
 
+%import "netinet/netinet.i"
+ %import "pyrt/event.i"
+diff --git a/src/nox/netapps/routing/routing.i b/src/nox/netapps/routing/routing.i
+index 44ccb3d..f9221a2 100644
+--- a/src/nox/netapps/routing/routing.i
++++ b/src/nox/netapps/routing/routing.i
+@@ -17,6 +17,8 @@
+  */
+ %module "nox.netapps.routing.pyrouting"
+ 
++// Hack to get it to compile -BL
++%include "std_list.i"
+ %{
+ #include "pyrouting.hh"
+ #include "routing.hh"
+diff --git a/src/nox/netapps/switch_management/pyswitch_management.i b/src/nox/netapps/switch_management/pyswitch_management.i
+index 72bfed4..ad2c90d 100644
+--- a/src/nox/netapps/switch_management/pyswitch_management.i
++++ b/src/nox/netapps/switch_management/pyswitch_management.i
+@@ -18,6 +18,8 @@
+
 persistentSetup() {
     echo "***creating key pair"
     ssh-keygen -t rsa -C "Cluster_Edition_Key" -f $USERDIR/cluster_key -N '' &> /dev/null
